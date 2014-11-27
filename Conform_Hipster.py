@@ -71,7 +71,7 @@ class Conformist(thinkbayes2.Suite):
     
     
 def main():
-  N = 100 #Number of iterations
+  N = 2 #Number of iterations
   hipsterMicroPopulation = 100
   confromistMicroPopulation = 500
   hip = Hipster(hipsterMicroPopulation, 1000)
@@ -89,6 +89,6 @@ def main():
     thinkplot.Pdf(hip,label = 'Hipsters')
     thinkplot.Pdf(conf,label = 'Conformists')
     thinkplot.show()
-    
+
     hip.Update((popmean,popstd))
     conf.Update((popmean,popstd))
