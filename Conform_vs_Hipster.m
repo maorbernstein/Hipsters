@@ -1,5 +1,6 @@
 clear all;
 mult = 0;
+rand_num = 1;
 S = 50;
 C = 50; % number of conformists
 H = 50; % number of hipsters

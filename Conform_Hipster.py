@@ -21,16 +21,16 @@ import thinkplot
 class Hipster(thinkbayes2.Suite):
   """doc strings"""
   
-  def __init__(self, microPopulation, N):
+  def __init__(self, microPopulation, N, label=None):
     
     self.microPopulation = microPopulation
     
     pmf = thinkbayes2.Pmf()
     for i in range(N):
-      self.Set(i/(N-1),1)
-    self.Normalize()
+      pmf.Set(i/(N-1),1)
+    pmf.Normalize()
     
-    thinkbayes2.Suite.__init__(self, pmf, label = label1)
+    thinkbayes2.Suite.__init__(self, pmf, label = label)
   
   def Likelihood(self, data, hypo):
     """Computes likelihood of data under hypothesis.
@@ -40,24 +40,24 @@ class Hipster(thinkbayes2.Suite):
     """
     opinion = hypo
     (mean,std) = data
-    like = thinkbayes2.EvalNormalPdf(hypo,mean,std)
+    like = thinkbayes2.EvalNormalPdf(hypo,.9-mean,std)
     return like
     
     
 class Conformist(thinkbayes2.Suite):
   """doc strings"""
   
-  def __init__(self, microPopulation, N):
+  def __init__(self, microPopulation, N, label=None):
     self.microPopulation = microPopulation
   
     pmf = thinkbayes2.Pmf()
     for i in range(N):
-      self.Set(i/(N-1),1)
-    self.Normalize()
+      pmf.Set(i/(N-1),1)
+    pmf.Normalize()
     
-    thinkbayes2.Suite.__init__(self,pmf,label = label2)
+    thinkbayes2.Suite.__init__(self,pmf,label = label)
   
-  def Likelihood(self, data, hype):
+  def Likelihood(self, data, hypo):
     """Computes likelihood of data under hypothesis.
     
     hypo: Hypo is an opinion, a number between 0 and 1
@@ -65,15 +65,15 @@ class Conformist(thinkbayes2.Suite):
     """
     opinion = hypo
     (mean,std) = data
-    comp_mean = 1 - mean # completementary mean
-    like = thinkbayes2.EvalNormalPdf(hypo,comp_mean,std)
+    #comp_mean = 1 - mean # completementary mean
+    like = thinkbayes2.EvalNormalPdf(hypo,mean,std)
     return like
     
     
 def main():
-  N = 2 #Number of iterations
+  N = 100 #Number of iterations
   hipsterMicroPopulation = 100
-  confromistMicroPopulation = 500
+  conformistMicroPopulation = 500
   hip = Hipster(hipsterMicroPopulation, 1000)
   conf = Conformist(conformistMicroPopulation, 1000)
   for i in range(N):
@@ -86,9 +86,24 @@ def main():
     popmean = (hipmean*hipPop + confmean*confPop)/(hipPop + confPop)
     popvar = (hipvar*hipPop + confvar*confPop)/(hipPop + confPop)
     popstd = math.sqrt(popvar)
-    thinkplot.Pdf(hip,label = 'Hipsters')
-    thinkplot.Pdf(conf,label = 'Conformists')
+    thinkplot.Pmf(hip,label = 'Hipsters')
+    thinkplot.show()
+    thinkplot.Pmf(conf,label = 'Conformists')
     thinkplot.show()
 
     hip.Update((popmean,popstd))
     conf.Update((popmean,popstd))
+
+def main2():
+  print('running main 2')
+  N = 2 #Number of iterations
+  hipsterMicroPopulation = 100
+  conformistMicroPopulation = 500
+  hip = Hipster(hipsterMicroPopulation, 1000)
+  conf = Conformist(conformistMicroPopulation, 1000)
+  print('starting thing plot')
+  thinkplot.Pmf(hip,label = 'Hipsters')
+  thinkplot.Pmf(conf,label = 'Conformists')
+  thinkplot.show()
+  print('finished')
+main()
