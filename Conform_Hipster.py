@@ -38,7 +38,7 @@ class Hipster(thinkbayes2.Suite):
     hypo: Hypo is an opinion, a number between 0 and 1
     data: Data is popular opinion, a tuple (mean,standard deviation)
     """
-	opinion = hypo
+    opinion = hypo
     (mean,std) = data
     like = thinkbayes2.EvalNormalPdf(hypo,mean,std)
     return like
@@ -50,7 +50,7 @@ class Conformist(thinkbayes2.Suite):
   def __init__(self, microPopulation, N):
     self.microPopulation = microPopulation
   
-  	pmf = thinkbayes2.Pmf()
+    pmf = thinkbayes2.Pmf()
     for i in range(N):
       self.Set(i/(N-1),1)
     self.Normalize()
@@ -63,7 +63,7 @@ class Conformist(thinkbayes2.Suite):
     hypo: Hypo is an opinion, a number between 0 and 1
     data: Data is popular opinion, a tuple (mean,standard deviation)
     """
-	opinion = hypo
+    opinion = hypo
     (mean,std) = data
     comp_mean = 1 - mean # completementary mean
     like = thinkbayes2.EvalNormalPdf(hypo,comp_mean,std)
