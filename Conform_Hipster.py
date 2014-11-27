@@ -89,5 +89,6 @@ def main():
     thinkplot.Pdf(hip,label = 'Hipsters')
     thinkplot.Pdf(conf,label = 'Conformists')
     thinkplot.show()
+    
     hip.Update((popmean,popstd))
     conf.Update((popmean,popstd))
