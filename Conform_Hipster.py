@@ -20,8 +20,7 @@ import thinkplot
 
 
 class Hipster(thinkbayes2.Suite):
-  """doc strings"""
-  
+    """ The Hipster type is a whose opinion distribution must match the opposite of the popular opinion. It is initialized at .6"""
   def __init__(self, N, label=None):
     
     
@@ -44,11 +43,11 @@ class Hipster(thinkbayes2.Suite):
     """
     opinion = hypo
     (mean,std) = data
-    like = thinkbayes2.EvalNormalPdf(hypo,1 - mean,std)
+    like = thinkbayes2.EvalNormalPdf(hypo,1 - mean,std) + .2*random.random()
     return like
     
 class Stubborn1(thinkbayes2.Suite):
-  """doc strings"""
+  """This is the first iteration of a stubborn population for testing purposes. They are absolutely stubborn and never change their opinion."""
   
   def __init__(self, N, label=None):
     
@@ -73,7 +72,7 @@ class Stubborn1(thinkbayes2.Suite):
     return 1
 
 class Stubborn2_Repub(thinkbayes2.Suite):
-  """doc strings"""
+  """The Stubborn2_Repub is a Stubborn person but can be convinced (they just have a cap on how much they can be convinced per time step), and Repub means they start out at .95"""
   
   def __init__(self, N, label=None):
     
@@ -94,6 +93,8 @@ class Stubborn2_Repub(thinkbayes2.Suite):
     
     hypo: Hypo is an opinion, a number between 0 and 1
     data: Data is popular opinion, a tuple (mean,standard deviation)
+    
+    As you can see, they can only be shifted by .05 maximally at a time.
     """
     opinion = hypo
     (mean,std) = data
@@ -109,7 +110,7 @@ class Stubborn2_Repub(thinkbayes2.Suite):
     return like
 
 class Stubborn2_Democ(thinkbayes2.Suite):
-  """doc strings"""
+  """The Stubborn2_Democ is a Stubborn person but can be convinced (they just have a cap on how much they can be convinced per time step), and Democ means they start at .05"""
   
   def __init__(self, N, label=None):
     
@@ -130,6 +131,7 @@ class Stubborn2_Democ(thinkbayes2.Suite):
     
     hypo: Hypo is an opinion, a number between 0 and 1
     data: Data is popular opinion, a tuple (mean,standard deviation)
+    As you can see, they can only be shifted by .05 maximally at a time.
     """
     opinion = hypo
     (mean,std) = data
@@ -145,7 +147,7 @@ class Stubborn2_Democ(thinkbayes2.Suite):
     return like
      
 class FlipFlopper(thinkbayes2.Suite):
-  """doc strings"""
+  """A Flip Flopper flips a coin, and then decides whether to be a conformist or a hipster. """
   
   def __init__(self, N, label=None):
     
@@ -179,7 +181,7 @@ class FlipFlopper(thinkbayes2.Suite):
 
 
 class Conformist(thinkbayes2.Suite):
-  """doc strings"""
+  """A conformist conforms to the population's opinion, in other words they're mean tends to the mean of the population"""
   
   def __init__(self, N, label=None):
   
@@ -208,6 +210,7 @@ class Conformist(thinkbayes2.Suite):
     
     
 def main():
+    """This main was to test 2 micro-populations to see whether stability could be reached"""
   N = 100 #Number of iterations
   hipfrac = 1
   conffrac = 1 - hipfrac
@@ -237,6 +240,7 @@ def main():
   
 
 def main_onlyhipsters():
+    """This main was written to see if we could validate our model with Touboul's model"""
   N = 80 #Number of iterations
   delay = 15
   hipfrac = 1
@@ -261,6 +265,7 @@ def main_onlyhipsters():
   
   
 def main_4_types():
+    """This main was written to test whether we could take this model and test something completely different with it (in our case political opinion)"""
   N = 100 #Number of iterations
   delay = 10
   hipfrac = .01
