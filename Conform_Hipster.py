@@ -44,7 +44,7 @@ class Hipster(thinkbayes2.Suite):
     """
     opinion = hypo
     (mean,std) = data
-    like = thinkbayes2.EvalNormalPdf(hypo,1 - mean,std) + .2*random.random()
+    like = thinkbayes2.EvalNormalPdf(hypo,1 - mean,std)
     return like
     
 class Stubborn1(thinkbayes2.Suite):
